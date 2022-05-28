@@ -46,7 +46,7 @@ import {
 import API from 'API';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { setAllCompletedTodo } from 'features/allTodoSlice';
+import { setAllCompletedTodo, setAllTodo } from 'features/allTodoSlice';
 
 const Index = () => {
   const addTaskRef = useRef(null);
@@ -103,12 +103,18 @@ const Index = () => {
   //!get AllTodo
   useEffect(() => {
     const getAllTodo = async () => {
-      const res = await API.get('/api/todo/alltodos/completed', {
+      const res = await API.get('/api/todo/alltodos', {
         headers: {
           Authorization: 'Bearer ' + user.details.accessToken,
         },
       });
-      dispatch(setAllCompletedTodo(res.data.AllTodos));
+      const resC = await API.get('/api/todo/alltodos/completed', {
+        headers: {
+          Authorization: 'Bearer ' + user.details.accessToken,
+        },
+      });
+      dispatch(setAllCompletedTodo(resC.data.AllTodos));
+      dispatch(setAllTodo(res.data.AllTodos));
     };
     getAllTodo();
   }, [syncTodo]);

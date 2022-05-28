@@ -24,6 +24,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import API from 'API';
 import { login } from 'features/userSlice';
+import { setSuccessMsg } from 'features/successMsgSlice';
 import { validateEmail } from 'helpers/validateEmail';
 
 const Login = () => {
@@ -45,6 +46,7 @@ const Login = () => {
           login({ details: res.data.user, appLoaded: true, isLogged: true })
         );
         localStorage.setItem('token', res.data.user.accessToken);
+        dispatch(setSuccessMsg(null));
         navigate('/app');
       } catch (error) {
         setErrorMsg(error.response.data.message);

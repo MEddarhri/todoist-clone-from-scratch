@@ -43,7 +43,7 @@ import {
   setSyncTodo,
   setTaskToEdit,
 } from 'features/toggleSlice';
-import { setAllTodo } from 'features/allTodoSlice';
+import { setAllCompletedTodo, setAllTodo } from 'features/allTodoSlice';
 import API from 'API';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -65,7 +65,7 @@ const Index = () => {
   const [taskDetails, setTaskDetails] = useState({
     title: '',
     description: '',
-    date_created: new Date(),
+    date_created: new Date().getTime(),
   });
 
   const [editDetails, setEditDetails] = useState({
@@ -165,6 +165,12 @@ const Index = () => {
           Authorization: 'Bearer ' + user.details.accessToken,
         },
       });
+      const resC = await API.get('/api/todo/alltodos/completed', {
+        headers: {
+          Authorization: 'Bearer ' + user.details.accessToken,
+        },
+      });
+      dispatch(setAllCompletedTodo(resC.data.AllTodos));
       dispatch(setAllTodo(res.data.AllTodos));
     };
     getAllTodo();
