@@ -41,6 +41,7 @@ import { addTaskToggle, sideBarToggle } from 'features/toggleSlice';
 import { useOutsideAlerter } from 'hooks/useOutsideAlerter';
 import { login } from 'features/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { setAllCompletedTodo, setAllTodo } from 'features/allTodoSlice';
 
 const Index = () => {
   const [showProfileBar, setShowProfileBar] = useState(false);
@@ -61,6 +62,8 @@ const Index = () => {
   const handleLogout = () => {
     dispatch(login({ appLoaded: true, isLogged: false, details: null }));
     localStorage.removeItem('token');
+    dispatch(setAllCompletedTodo([]));
+    dispatch(setAllTodo([]));
     navigate('/login');
   };
 

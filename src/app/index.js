@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { login } from 'features/userSlice';
 import API from 'API';
 import { useNavigate } from 'react-router-dom';
+import { setAllCompletedTodo, setAllTodo } from 'features/allTodoSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ const App = () => {
       } catch (error) {
         localStorage.removeItem('token');
         dispatch(login({ details: null, appLoaded: true, isLogged: false }));
+        dispatch(setAllCompletedTodo([]));
+        dispatch(setAllTodo([]));
       }
     };
 
@@ -36,6 +39,8 @@ const App = () => {
       getUserDetails();
     } else {
       dispatch(login({ details: null, isLogged: false, appLoaded: true }));
+      dispatch(setAllCompletedTodo([]));
+      dispatch(setAllTodo([]));
     }
   }, []);
   return (

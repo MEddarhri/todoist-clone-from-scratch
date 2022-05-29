@@ -78,7 +78,7 @@ export const ProfileOptionsCont = styled.div`
   top: 45px;
   right: 30px;
   width: 100%;
-  max-width: 280px;
+  max-width: 320px;
   border-radius: 8px;
   border: 1px solid #0003;
   box-shadow: 1px 2px 20px #0003;

@@ -20,7 +20,7 @@ import { MdOutlineWidgets } from 'react-icons/md';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 import { VscAdd } from 'react-icons/vsc';
 import { TiInputChecked } from 'react-icons/ti';
-import { projectToggle } from 'features/toggleSlice';
+import { projectToggle, sideBarToggle } from 'features/toggleSlice';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { setAllCompletedTodo } from 'features/allTodoSlice';
@@ -45,9 +45,20 @@ const Index = () => {
     }
   };
 
+  const handleSideBarInMobileView = () => {
+    if (window.innerWidth <= 1024) {
+      dispatch(sideBarToggle());
+    }
+  };
+
+  // window.addEventListener('resize', () => {
+  //   if (window.innerWidth <= 1024) {
+  //     dispatch(sideBarToggle());
+  //   }
+  // });
   return (
     <Container sideBar={sideBar}>
-      <OptionsContainer>
+      <OptionsContainer onClick={handleSideBarInMobileView}>
         <Link to='/app'>
           <SideBarOption title='Mailbox' num={allTodo.length}>
             <BsVoicemail size={'18px'} color='#246fe0' />
@@ -74,17 +85,23 @@ const Index = () => {
             <VscAdd size='17px' color='#0007' />
           </AddProject>
         </ProjectTitleContainer>
-        <ProjectOptionsContainer ref={projectRef} project={project}>
+        <ProjectOptionsContainer
+          ref={projectRef}
+          project={project}
+          onClick={handleSideBarInMobileView}
+        >
           <ProjectOption title='Welcome' num={6} />
           <ProjectOption title='Try todist Boards' num={5} />
           <ProjectOption title='My custom project' num={3} />
         </ProjectOptionsContainer>
       </ProjectContainer>
-      <Link to='/app/completed'>
-        <SideBarOption title='Completed' num={allCompletedTodo.length}>
-          <TiInputChecked size={'22px'} color='#246fe0' />
-        </SideBarOption>
-      </Link>
+      <div onClick={handleSideBarInMobileView}>
+        <Link to='/app/completed'>
+          <SideBarOption title='Completed' num={allCompletedTodo.length}>
+            <TiInputChecked size={'22px'} color='#246fe0' />
+          </SideBarOption>
+        </Link>
+      </div>
     </Container>
   );
 };
