@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from 'pages/login';
+import Home from 'pages/home';
 import Register from 'pages/register';
 import Dashboard from 'pages/dashboard';
 import DashboardTaskCompleted from 'pages/dashtaskcompleted';
@@ -10,6 +11,7 @@ import ProtectedRouteDash from './ProtectedRouteDash';
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path='/' element={<Home />} />
       <Route
         path='/login'
         element={
